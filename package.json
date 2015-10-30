@@ -1,0 +1,24 @@
+{
+  "name": "caruselul-literelor",
+  "version": "0.0.1",
+  "description": "Joc de cuvinte",
+  "main": "carusel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mihai-varga/MPS2015-proiect-1.git"
+  },
+  "author": "Echipa de la labul de marti dimineata @MPS",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/mihai-varga/MPS2015-proiect-1/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-concat": "~0.5.1",
+    "http-server": "~0.8.5",
+    "grunt-http-server": "~1.13.0"
+  }
+}
