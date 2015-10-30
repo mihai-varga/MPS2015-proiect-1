@@ -2,9 +2,41 @@
 <html>
 <head>
 	<title>Letter carousel</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="./client/dist/carousel.js"></script>
+    <script type="text/javascript" src="./client/semantic-ui/semantic.min.js"></script>
+    <script type="text/javascript" src="./client/semantic-ui/components/api.min.js"></script>
+    <script type="text/javascript" src="./client/semantic-ui/components/colorize.min.js"></script>
+    <script type="text/javascript" src="./client/semantic-ui/components/modal.min.js"></script>
+
+    <link rel="stylesheet" href="./client/semantic-ui/semantic.min.css"/>
+    <link rel="stylesheet" href="./client/semantic-ui/components/button.min.css"/>
+    <link rel="stylesheet" href="./client/semantic-ui/components/container.min.css"/>
+    <link rel="stylesheet" href="./client/semantic-ui/components/header.min.css"/>
+    <link rel="stylesheet" href="./client/semantic-ui/components/input.min.css"/>
+    <link rel="stylesheet" href="./client/semantic-ui/components/modal.min.css"/>
 </head>
 <body>
-    Hello
+<!-- Login dialog -->
+<div class="ui modal">
+  <div class="header">
+   Welcome to Word Carousel!
+  </div>
+  <div class="image content">
+    <div class="description">
+      <div class="ui header">Please pick a name in order to continue.</div>
+      <div class="ui big input focus">
+        <input type="text" id="playerNameInput" onkeypress="C.player.onNameInput(event)" placeholder="Name...">
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui positive right labeled icon button">
+        OK
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
 </body>
 </html>
