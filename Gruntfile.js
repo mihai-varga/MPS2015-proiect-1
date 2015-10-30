@@ -5,7 +5,13 @@ module.exports = function(grunt) {
                 separator: ';',
             },
             client: {
-                src: ['client/src/**/*.js'],
+                src: [
+                    'client/src/Carousel.js',
+                    'client/src/Class.js',
+                    'client/src/Util.js',
+                    'client/src/Player.js',
+                    'client/src/Main.js'
+                ],
                 dest: 'client/dist/carousel.js',
             },
         },
