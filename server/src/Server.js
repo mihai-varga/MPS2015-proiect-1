@@ -8,10 +8,15 @@ var allPlayers = {};
 wss.on('connection', function connection(ws) {
     // Add a new player to the dictionary.
     allPlayers[ws] = new Player(ws);
-    console.log('Client %s connected.', allPlayers[ws].name);
 
     ws.on('message', function incoming(message) {
-        console.log('received: %s from %s', message, allPlayers[ws].name);
+        var json = JSON.parse(message);
+        switch (json.command) {
+            case 'setname':
+                // Change name of the current player.
+                allPlayers[ws].name = json.name;
+                break;
+        }
     });
 
     ws.send('something', function ack(error) {
@@ -21,7 +26,6 @@ wss.on('connection', function connection(ws) {
     ws.on('close', function() {
         // Disconnecting a client means deleting the client's entry from the
         // dictionary.
-        console.log('Client %s disconnected.', allPlayers[ws].name);
         delete allPlayers[ws];
     });
 });
