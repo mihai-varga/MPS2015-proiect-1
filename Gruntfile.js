@@ -12,9 +12,29 @@ module.exports = function(grunt) {
                     'client/src/Player.js',
                     'client/src/Main.js'
                 ],
-                dest: 'client/dist/carousel.js',
+                dest: 'client/dist/carousel.js'
             },
+            server: {
+                src: [
+                    'server/src/Server.js',
+                ],
+                dest: 'server/dist/server.js'
+            }
         },
+
+        nodemon: {
+            all: {
+                script: 'server/dist/server.js',
+                options: {
+                    delayTime: 100,
+                    exitcrash: true,
+                    legacyWatch: true,
+                    watch: ['server/dist/server.js']
+                }
+            }
+        },
+
+        mdlint: ['README.md'],
 
         'http-server': {
             'dev': {
@@ -25,6 +45,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-http-server');
+    grunt.loadNpmTasks('grunt-nodemon');
 
     grunt.registerTask('default', ['concat']);
     grunt.registerTask('build', ['concat']);
