@@ -6,6 +6,7 @@ sudo apt-get install nodejs npm
 npm install
 sudo npm install -g grunt-cli
 grunt build
+cd .git/hooks && ln -s ../../.git-hooks/* ./
 ```
 
 ## Running things
