@@ -1,10 +1,10 @@
 var WebSocketServer = require('ws').Server
     , wss = new WebSocketServer({ port: 8080});
 
-var clientId = 0; // change this to a UUID
 wss.on('connection', function connection(ws) {
-    var thisId = ++clientId;
-    console.log('Client #%d connected.', thisId);
+    var newClient = new Player(ws);
+
+    console.log('Client #%s, %s connected.', newClient.uuid, newClient.name);
 
     ws.on('message', function incoming(message) {
         console.log('received: %s', message);
@@ -15,6 +15,6 @@ wss.on('connection', function connection(ws) {
     });
 
     ws.on('close', function() {
-        console.log('Client #%d has disconnected.', thisId);
+        // TODO: Add code here.
     });
 });
