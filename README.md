@@ -36,6 +36,10 @@ grunt build
         src/*
         dist/
             carousel.js
+    server/
+        src/*
+        dist/
+            server.js
     package.json
     Gruntfile.js
     index.html
