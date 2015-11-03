@@ -1,10 +1,14 @@
 C.Player = C.Class.extend({
     options: {
-        name: 'Uknown'
+        name: 'Unknown',
+        server: 'ws://172.16.15.94:8080'
     },
 
     initialize: function (options) {
         options = C.setOptions(this, options);
+        this.ws = new WebSocket(options.server);
+        this.ws.onmessage = C.bind(this.onMessage, this);
+        this.ws.onclose = function () {throw new Error('The server crashed');};
         this.promptLoginDialog();
     },
 
@@ -28,5 +32,16 @@ C.Player = C.Class.extend({
             this.name = this.name === '' ? this.options.name : this.name;
             console.log(this.name);
         }
+    },
+
+    onStartSinglePlayer: function () {
+        this.ws.send(JSON.stringify({
+            command: 'startgame'
+        }));
+    },
+
+    onMessage: function (msg) {
+        msg = msg.data;
+        console.log(msg);
     }
 });
