@@ -18,6 +18,7 @@ module.exports = function(grunt) {
                 src: [
                     'server/src/Server.js',
                     'server/src/Player.js',
+                    'server/src/Game.js',
                 ],
                 dest: 'server/dist/server.js'
             }
