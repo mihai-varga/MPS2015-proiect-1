@@ -23,24 +23,20 @@ Game.prototype.gameBroadcast = function(msg) {
 // Starts a new game session for each connected user and then sets the timeout
 // to end this session.
 Game.prototype.startSession = function() {
-    for (var i = 0; i < this.userList.length; i++) {
-        this.userList[i].ws.send(JSON.stringify({
-            command : 'startsession',
-            id: this.id
-        }));
-    }
+    this.gameBroadcast({
+        command : 'startsession',
+        id: this.id
+    });
     setTimeout(this.endSession.bind(this), this.timeout);
 }
 
 
 // Ends the current session by notifying each of the connected users.
 Game.prototype.endSession = function() {
-    for (var i = 0; i < this.userList.length; i++) {
-        this.userList[i].ws.send(JSON.stringify({
-            command : 'endsession',
-            id: this.id
-        }));
-    }
+    this.gameBroadcast({
+        command : 'endsession',
+        id: this.id
+    });
 }
 
 // Generates a UUID as per http://www.ietf.org/rfc/rfc4122.txt.
