@@ -1,7 +1,7 @@
 C.Player = C.Class.extend({
     options: {
         name: 'Unknown',
-        server: 'ws://172.16.15.94:8080'
+        server: 'ws://localhost:8080'
     },
 
     initialize: function (options) {
