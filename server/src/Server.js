@@ -25,7 +25,7 @@ wss.on('connection', function connection(ws) {
                 allGames[newGame.id] = newGame;
                 break;
             case 'validateword':
-                allGames[json.gameId].handleWord(json);
+                allGames[json.gameId].validateWord(json);
                 break;
         }
     });

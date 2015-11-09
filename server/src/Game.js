@@ -52,7 +52,7 @@ Game.prototype.generateUuid = function() {
 }
 
 // Handles a new word inputed by the player
-Player.prototype.handleWord = function(json) {
+Player.prototype.validateWord = function(json) {
     // return the initial json with some modified properties
     var isValidWord = Math.random() > 0.5; // TODO - check the dictionary
     json.valid = isValidWord && !this.usedWords[json.word];
