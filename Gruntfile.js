@@ -9,6 +9,7 @@ module.exports = function(grunt) {
                     'client/src/Carousel.js',
                     'client/src/Class.js',
                     'client/src/Util.js',
+                    'client/src/Game.js',
                     'client/src/Player.js',
                     'client/src/Main.js'
                 ],
