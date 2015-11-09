@@ -4,7 +4,7 @@ var WebSocketServer = require('ws').Server
 // A key-value dictionary to keep track of the connected clients. The key will
 // be the web socket the client is using to communicate with the server.
 var allPlayers = {};
-var allGames = [];
+var allGames = {};
 
 wss.on('connection', function connection(ws) {
     // Add a new player to the dictionary.
@@ -22,6 +22,10 @@ wss.on('connection', function connection(ws) {
                 var newGame = new Game();
                 newGame.addPlayer(allPlayers[ws]);
                 newGame.startSession();
+                allGames[newGame.id] = newGame;
+                break;
+            case 'validateword':
+                allGames[json.gameId].handleWord(json);
                 break;
         }
     });
