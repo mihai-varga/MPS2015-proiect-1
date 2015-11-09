@@ -20,7 +20,7 @@ C.Player = C.Class.extend({
     },
 
     onNameModalSelect: function (e) {
-        this.name = document.getElementById('playerNameInput').value;
+        this.name = $('#playerNameInput').value;
         this.name = this.name === '' ? this.options.name : this.name;
     },
 
@@ -28,20 +28,35 @@ C.Player = C.Class.extend({
         if (e.keyCode === 13) {
             // enter
             $('.ui.modal').modal('hide');
-            this.name = document.getElementById('playerNameInput').value;
+            this.name = $('#playerNameInput').value;
             this.name = this.name === '' ? this.options.name : this.name;
             console.log(this.name);
         }
     },
 
+    onWordInput: function (e) {
+        if (e.keyCode === 13) {
+            // enter
+            var word = $('#newWord').value;
+            // clear the input
+            $('#newWord').val('');
+            this.game.validateWord(word);
+        }
+    },
+
     onStartSinglePlayer: function () {
+        this.game = new C.Game(this.ws);
         this.ws.send(JSON.stringify({
             command: 'startgame'
         }));
     },
 
     onMessage: function (msg) {
-        msg = msg.data;
-        console.log(msg);
+        msg = JSON.parse(msg.data);
+        switch (msg.command) {
+            case 'validateword':
+                this.game.onMessage(msg);
+                break;
+        }
     }
 });

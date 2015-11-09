@@ -52,15 +52,12 @@
         Start a single player game
       </button>
       <div class="ui input focus">
-        <input type="text" placeholder="New word...">
+        <input type="text" placeholder="New word..." id="newWord" onkeypress="C.player.onWordInput(event)">
       </div>
   </div>
   <div class="column">
     <h2>Submitted words</h2>
-    <div class="ui list">
-      <div class="item">Apples</div>
-      <div class="item">Pears</div>
-      <div class="item">Oranges</div>
+    <div id="wordList" class="ui list">
     </div>
   </div>
   <div class="column">
