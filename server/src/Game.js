@@ -40,7 +40,7 @@ Game.prototype.endSession = function() {
 }
 
 // Generates a UUID as per http://www.ietf.org/rfc/rfc4122.txt.
-Player.prototype.generateUuid = function() {
+Game.prototype.generateUuid = function() {
     var d = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
             function(c) {
