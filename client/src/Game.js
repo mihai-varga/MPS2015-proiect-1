@@ -31,7 +31,7 @@ C.Game = C.Class.extend({
     addWordToList: function (json) {
         $('#wordList').prepend(
             '<div class="item">' +
-                '<i class="green checkmark icon"></i>' +
+                (json.valid ? '<i class="green checkmark icon"></i>' : '<i class="red remove icon"></i>') +
                 '<div class="content">' +
                     json.word +
                 '</div>' +
