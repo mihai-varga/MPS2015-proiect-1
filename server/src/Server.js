@@ -30,10 +30,6 @@ wss.on('connection', function connection(ws) {
         }
     });
 
-    ws.send('something', function ack(error) {
-        // TODO: Treat error.
-    });
-
     ws.on('close', function() {
         // Disconnecting a client means deleting the client's entry from the
         // dictionary.
