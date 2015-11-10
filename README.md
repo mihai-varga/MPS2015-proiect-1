@@ -2,7 +2,7 @@
 
 ## Getting started
 ```
-sudo apt-get install nodejs npm
+sudo apt-get install nodejs npm (might need to install nodejs-legacy)
 npm install
 sudo npm install -g grunt-cli
 grunt build
