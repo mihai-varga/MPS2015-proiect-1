@@ -4,7 +4,7 @@ function Game() {
     this.userList = [];
     // Game's name, by default = 'FatCat'.
     this.gameRoomName = 'FatCat';
-    this.timeout = 1 * 60 * 1000 + 1 * 1000; // 1 minute + 1s
+    this.timeout = 1 * 60 * 1000; // 1 minute
     this.gameId = this.generateUuid();
     this.usedWords = {};
 }
@@ -25,7 +25,8 @@ Game.prototype.gameBroadcast = function(msg) {
 Game.prototype.startSession = function() {
     this.gameBroadcast({
         command : 'startsession',
-        gameId: this.gameId
+        gameId: this.gameId,
+        timeout: this.timeout
     });
     setTimeout(this.endSession.bind(this), this.timeout);
 }

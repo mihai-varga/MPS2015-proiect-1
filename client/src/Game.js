@@ -6,10 +6,13 @@ C.Game = C.Class.extend({
     initialize: function (ws, options) {
         options = C.setOptions(this, options);
         this.gameId = options.gameId;
+        // timeout in ms
+        this.timeout = options.timeout;
         this.ws = ws;
         this.score = 0;
         // clear the word list;
         $('#wordList').empty();
+        this.startTimer(this.timeout / 1000);
     },
 
     validateWord: function (word) {
@@ -36,5 +39,35 @@ C.Game = C.Class.extend({
                     json.word +
                 '</div>' +
             '</div>');
+    },
+
+    startTimer: function (duration) {
+        var start = Date.now(),
+            diff,
+            minutes,
+            seconds;
+        var interval;
+        function timer() {
+            // get the number of seconds that have elapsed since
+            // startTimer() was called
+            diff = duration - (((Date.now() - start) / 1000) | 0);
+
+            // does the same job as parseInt truncates the float
+            minutes = (diff / 60) | 0;
+            seconds = (diff % 60) | 0;
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            console.log(minutes + ":" + seconds);
+            $('#timer').text(minutes + ':' + seconds);
+
+            if (diff <= 0) {
+                clearInterval(interval);
+            }
+        };
+        // we don't want to wait a full second before the timer starts
+        timer();
+        interval = setInterval(timer, 1000);
     }
 });
