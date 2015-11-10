@@ -30,6 +30,10 @@ C.Player = C.Class.extend({
     onNameModalSelect: function (e) {
         this.name = $('#playerNameInput').val();
         this.name = this.name === '' ? this.options.name : this.name;
+        this.ws.send(JSON.stringify({
+            command: 'setname',
+            name: this.name
+        }));
     },
 
     onNameInput: function (e) {
@@ -38,7 +42,10 @@ C.Player = C.Class.extend({
             $('.ui.modal').modal('hide');
             this.name = $('#playerNameInput').val();
             this.name = this.name === '' ? this.options.name : this.name;
-            console.log(this.name);
+            this.ws.send(JSON.stringify({
+                command: 'setname',
+                name: this.name
+            }));
         }
     },
 
