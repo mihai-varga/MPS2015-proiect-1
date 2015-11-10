@@ -22,7 +22,7 @@ wss.on('connection', function connection(ws) {
                 var newGame = new Game();
                 newGame.addPlayer(allPlayers[ws]);
                 newGame.startSession();
-                allGames[newGame.id] = newGame;
+                allGames[newGame.gameId] = newGame;
                 break;
             case 'validateword':
                 allGames[json.gameId].validateWord(json);

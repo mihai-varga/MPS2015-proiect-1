@@ -5,6 +5,7 @@ C.Game = C.Class.extend({
 
     initialize: function (ws, options) {
         options = C.setOptions(this, options);
+        this.gameId = options.gameId;
         this.ws = ws;
         this.score = 0;
         // clear the word list;
@@ -12,9 +13,11 @@ C.Game = C.Class.extend({
     },
 
     validateWord: function (word) {
+        console.log(this.gameId);
         this.ws.send(JSON.stringify({
             command: 'validateword',
-            word: word
+            word: word,
+            gameId: this.gameId
         }));
     },
 

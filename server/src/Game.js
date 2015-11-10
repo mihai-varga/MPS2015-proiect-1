@@ -5,7 +5,7 @@ function Game() {
     // Game's name, by default = 'FatCat'.
     this.gameRoomName = 'FatCat';
     this.timeout = 1 * 60 * 1000 + 1 * 1000; // 1 minute + 1s
-    this.id = this.generateUuid();
+    this.gameId = this.generateUuid();
     this.usedWords = {};
 }
 
@@ -25,7 +25,7 @@ Game.prototype.gameBroadcast = function(msg) {
 Game.prototype.startSession = function() {
     this.gameBroadcast({
         command : 'startsession',
-        id: this.id
+        gameId: this.gameId
     });
     setTimeout(this.endSession.bind(this), this.timeout);
 }
@@ -35,7 +35,7 @@ Game.prototype.startSession = function() {
 Game.prototype.endSession = function() {
     this.gameBroadcast({
         command : 'endsession',
-        id: this.id
+        gameId: this.gameId
     });
 }
 
@@ -52,7 +52,7 @@ Game.prototype.generateUuid = function() {
 }
 
 // Handles a new word inputed by the player
-Player.prototype.validateWord = function(json) {
+Game.prototype.validateWord = function(json) {
     // return the initial json with some modified properties
     var isValidWord = Math.random() > 0.5; // TODO - check the dictionary
     json.valid = isValidWord && !this.usedWords[json.word];

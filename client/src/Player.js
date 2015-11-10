@@ -28,7 +28,7 @@ C.Player = C.Class.extend({
     },
 
     onNameModalSelect: function (e) {
-        this.name = $('#playerNameInput').value;
+        this.name = $('#playerNameInput').val();
         this.name = this.name === '' ? this.options.name : this.name;
     },
 
@@ -36,7 +36,7 @@ C.Player = C.Class.extend({
         if (e.keyCode === 13) {
             // enter
             $('.ui.modal').modal('hide');
-            this.name = $('#playerNameInput').value;
+            this.name = $('#playerNameInput').val();
             this.name = this.name === '' ? this.options.name : this.name;
             console.log(this.name);
         }
@@ -53,7 +53,6 @@ C.Player = C.Class.extend({
     },
 
     onStartSinglePlayer: function () {
-        this.game = new C.Game(this.ws);
         this.ws.send(JSON.stringify({
             command: 'startgame'
         }));
@@ -62,6 +61,9 @@ C.Player = C.Class.extend({
     onMessage: function (msg) {
         msg = JSON.parse(msg.data);
         switch (msg.command) {
+            case 'startsession':
+                this.game = new C.Game(this.ws, msg);
+                break;
             case 'validateword':
                 this.game.onMessage(msg);
                 break;
