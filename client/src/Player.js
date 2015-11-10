@@ -6,10 +6,18 @@ C.Player = C.Class.extend({
 
     initialize: function (options) {
         options = C.setOptions(this, options);
+        options.server = this.getParameterByName('server') || options.server;
         this.ws = new WebSocket(options.server);
         this.ws.onmessage = C.bind(this.onMessage, this);
         this.ws.onclose = function () {throw new Error('The server crashed');};
         this.promptLoginDialog();
+    },
+
+    getParameterByName: function (name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : results[1].replace(/\+/g, " ");
     },
 
     promptLoginDialog: function () {
