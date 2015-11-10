@@ -52,7 +52,7 @@ C.Player = C.Class.extend({
     onWordInput: function (e) {
         if (e.keyCode === 13) {
             // enter
-            var word = $('#newWord').value;
+            var word = $('#newWord').val();
             // clear the input
             $('#newWord').val('');
             this.game.validateWord(word);

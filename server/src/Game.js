@@ -57,7 +57,7 @@ Game.prototype.validateWord = function(json) {
     var isValidWord = Math.random() > 0.5; // TODO - check the dictionary
     json.valid = isValidWord && !this.usedWords[json.word];
     if (json.valid) {
-        usedWords[json.word] = true;
+        this.usedWords[json.word] = true;
     }
     this.gameBroadcast(json);
 }

@@ -13,7 +13,6 @@ C.Game = C.Class.extend({
     },
 
     validateWord: function (word) {
-        console.log(this.gameId);
         this.ws.send(JSON.stringify({
             command: 'validateword',
             word: word,
@@ -22,6 +21,20 @@ C.Game = C.Class.extend({
     },
 
     onMessage: function (json) {
-        console.log(json);
+        switch (json.command) {
+            case 'validateword':
+                this.addWordToList(json);
+                break;
+        }
+    },
+
+    addWordToList: function (json) {
+        $('#wordList').prepend(
+            '<div class="item">' +
+                '<i class="green checkmark icon"></i>' +
+                '<div class="content">' +
+                    json.word +
+                '</div>' +
+            '</div>');
     }
 });
