@@ -15,12 +15,15 @@ wss.on('connection', function connection(ws) {
         var json = JSON.parse(message);
         switch (json.command) {
             case 'setname':
-                // Change name of the current player.
-                allPlayers[ws].name = json.name;
+                // Register a new player.
+                var player = new Player(ws);
+                player.name = json.name;
+                player.uuid = json.uuid;
+                allPlayers[player.uuid] = player;
                 break;
             case 'startgame':
                 var newGame = new Game();
-                newGame.addPlayer(allPlayers[ws]);
+                newGame.addPlayer(allPlayers[json.uuid]);
                 newGame.startSession();
                 allGames[newGame.gameId] = newGame;
                 break;
@@ -33,6 +36,5 @@ wss.on('connection', function connection(ws) {
     ws.on('close', function() {
         // Disconnecting a client means deleting the client's entry from the
         // dictionary.
-        delete allPlayers[ws];
     });
 });

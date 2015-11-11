@@ -10,7 +10,20 @@ C.Player = C.Class.extend({
         this.ws = new WebSocket(options.server);
         this.ws.onmessage = C.bind(this.onMessage, this);
         this.ws.onclose = function () {throw new Error('The server crashed');};
+        this.uuid = this.generateUuid();
         this.promptLoginDialog();
+    },
+
+    // Generates a UUID as per http://www.ietf.org/rfc/rfc4122.txt.
+    generateUuid: function() {
+        var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+                function(c) {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d/16);
+                    return (c=='x' ? r : (r&0x3 | 0x8)).toString(16);
+        });
+        return uuid;
     },
 
     getParameterByName: function (name) {
@@ -32,7 +45,8 @@ C.Player = C.Class.extend({
         this.name = this.name === '' ? this.options.name : this.name;
         this.ws.send(JSON.stringify({
             command: 'setname',
-            name: this.name
+            name: this.name,
+            uuid: this.uuid
         }));
     },
 
@@ -44,7 +58,8 @@ C.Player = C.Class.extend({
             this.name = this.name === '' ? this.options.name : this.name;
             this.ws.send(JSON.stringify({
                 command: 'setname',
-                name: this.name
+                name: this.name,
+                uuid: this.uuid
             }));
         }
     },
@@ -61,7 +76,8 @@ C.Player = C.Class.extend({
 
     onStartSinglePlayer: function () {
         this.ws.send(JSON.stringify({
-            command: 'startgame'
+            command: 'startgame',
+            uuid: this.uuid
         }));
     },
 
