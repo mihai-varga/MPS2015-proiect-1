@@ -84,6 +84,9 @@ C.Player = C.Class.extend({
     onMessage: function (msg) {
         msg = JSON.parse(msg.data);
         switch (msg.command) {
+            case 'playerlist':
+                console.log(msg.players);
+                break;
             case 'startsession':
                 this.game = new C.Game(this.ws, msg);
                 break;

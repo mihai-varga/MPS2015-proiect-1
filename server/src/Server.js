@@ -7,10 +7,6 @@ var allPlayers = {};
 var allGames = {};
 
 wss.on('connection', function connection(ws) {
-    // Add a new player to the dictionary.
-    allPlayers[ws] = new Player(ws);
-    console.log(allPlayers[ws].uuid);
-
     ws.on('message', function incoming(message) {
         var json = JSON.parse(message);
         switch (json.command) {
@@ -20,6 +16,7 @@ wss.on('connection', function connection(ws) {
                 player.name = json.name;
                 player.uuid = json.uuid;
                 allPlayers[player.uuid] = player;
+                broadcastPlayers();
                 break;
             case 'startgame':
                 var newGame = new Game();
@@ -38,3 +35,21 @@ wss.on('connection', function connection(ws) {
         // dictionary.
     });
 });
+
+function broadcastPlayers() {
+    var players = [];
+    for (var uuid in allPlayers) {
+        var player = allPlayers[uuid];
+        players.push({
+            uuid: player.uuid,
+            name: player.name
+        });
+    }
+    for (var uuid in allPlayers) {
+        var ws = allPlayers[uuid].ws;
+        ws.send(JSON.stringify({
+            command: 'playerlist',
+            players: players
+        }));
+    }
+}
