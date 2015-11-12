@@ -50,11 +50,15 @@
 <h2 class="ui center aligned header">Basic Responsive</h2>
 <div class="ui three column stackable grid">
   <div class="column">
-      <button id="startSinglePlayer" class="ui olive button" onclick="C.player.onStartSinglePlayer()">
-        Start a single player game
-      </button>
-      <div class="ui input focus">
-        <input type="text" placeholder="New word..." id="newWord" onkeypress="C.player.onWordInput(event)">
+      <div class="ui center aligned basic segment">
+          <button id="startSinglePlayer" class="ui massive olive button" onclick="C.player.onStartSinglePlayer()">
+            Start game
+          </button>
+      </div>
+      <div class="ui center aligned basic segment">
+          <div class="ui input focus">
+            <input type="text" placeholder="New word..." id="newWord" onkeypress="C.player.onWordInput(event)">
+          </div>
       </div>
   </div>
   <div class="column">
