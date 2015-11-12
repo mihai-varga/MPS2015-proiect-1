@@ -25,7 +25,7 @@
 </head>
 <body>
 <!-- Login dialog -->
-<div class="ui modal">
+<div class="ui modal" id="loginDialog">
   <div class="header">
    Welcome to Word Carousel!
   </div>
@@ -34,6 +34,27 @@
       <div class="ui header">Please pick a name in order to continue.</div>
       <div class="ui big input focus">
         <input type="text" id="playerNameInput" onkeypress="C.player.onNameInput(event)" placeholder="Name...">
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui positive right labeled icon button">
+        OK
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
+
+<!-- New game room dialog -->
+<div class="ui modal" id="newGameRoomDialog">
+  <div class="header">
+  Create a new game room 
+  </div>
+  <div class="image content">
+    <div class="description">
+      <div class="ui header">Please pick a name for your game room.</div>
+      <div class="ui big input focus">
+        <input type="text" id="gameRoomInput" placeholder="Name...">
       </div>
     </div>
   </div>
@@ -82,7 +103,7 @@
       <div class="ui segments">
           <div class="ui segment">
               <p>
-                <button class="ui icon button" onClick="C.player.addNewGameRoom()">
+                <button class="ui icon button" id="addGameRoomBtn" onClick="C.player.addNewGameRoom()">
                     <i class="plus icon"></i>
                 </button>
                 Game rooms

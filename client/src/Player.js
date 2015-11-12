@@ -34,7 +34,7 @@ C.Player = C.Class.extend({
     },
 
     promptLoginDialog: function () {
-        $('.ui.modal').modal({
+        $('#loginDialog').modal({
             closable: false,
             onApprove: C.bind(this.onNameModalSelect, this)
         }).modal('show');
@@ -105,5 +105,22 @@ C.Player = C.Class.extend({
                 '   <p><i class="spy icon"></i>' + player.name + '</p>' +
                 '</div>');
         });
+    },
+
+    addNewGameRoom: function () {
+        $('#newGameRoomDialog').modal({
+            closable: false,
+            onApprove: C.bind(this.onGameRoomNameSelect, this)
+        }).modal('show');
+        $('#addGameRoomBtn').addClass('disabled');
+    },
+
+    onGameRoomNameSelect: function () {
+        var gameName = $('#playerNameInput').val();
+        this.ws.send(JSON.stringify({
+            command: 'creategameroom',
+            name: gameName,
+            uuid: this.uuid
+        }));
     }
 });
