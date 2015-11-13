@@ -105,7 +105,19 @@ C.Player = C.Class.extend({
                 '   <p><i class="spy icon"></i>' + player.name + '</p>' +
                 '</div>');
         });
-        console.log(JSON.stringify(gameRooms, null, 4));
+        $('#gameRooms').empty();
+        gameRooms.forEach(function(gameRoom) {
+            var gameRoomPlayers = '<div class="ui bulleted list">';
+            gameRoom.players.forEach(function(player) {
+                gameRoomPlayers += '<div class="item">' + player.name + '</div>';
+            });
+            gameRoomPlayers += '</div>';
+            var gameRoomSegment = '<div class="ui segment">' +
+                                      '<p>' + gameRoom.name + '</p>';
+            gameRoomSegment += gameRoomPlayers;
+            gameRoomSegment += '</div>';
+            $('#gameRooms').append(gameRoomSegment);
+        });
     },
 
     addNewGameRoom: function () {
@@ -117,7 +129,7 @@ C.Player = C.Class.extend({
     },
 
     onGameRoomNameSelect: function () {
-        var gameName = $('#playerNameInput').val();
+        var gameName = $('#gameRoomInput').val();
         this.ws.send(JSON.stringify({
             command: 'creategameroom',
             name: gameName,
