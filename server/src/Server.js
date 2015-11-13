@@ -46,6 +46,34 @@ wss.on('connection', function connection(ws) {
     ws.on('close', function() {
         // Disconnecting a client means deleting the client's entry from the
         // dictionary.
+        for (var uuid in allPlayers) {
+            if (allPlayers[uuid].ws === ws) {
+                // this player has disconnected
+                delete allPlayers[uuid];
+
+                // TODO - fix this part
+                for (var gameId in allGames) {
+                    var game = allGames[gameId];
+                    if (game.owner === uuid) {
+                        // TOOD - stop the current game
+                        delete allGames[gameId];
+                    }
+                    else {
+                        var index = -1;
+                        for (var i = 0; i < game.userList.length; i++) {
+                            if (game.userList[i].uuid == uuid) {
+                                index = i;
+                                break;
+                            }
+                        }
+                        if (index > -1) {
+                            game.userList.splice(index, 1);
+                        }
+                    }
+                }
+            }
+        }
+        broadcastPlayers();
     });
 });
 
