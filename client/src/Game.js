@@ -59,7 +59,6 @@ C.Game = C.Class.extend({
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            console.log(minutes + ":" + seconds);
             $('#timer').text(minutes + ':' + seconds);
 
             if (diff <= 0) {

@@ -19,10 +19,16 @@ wss.on('connection', function connection(ws) {
                 broadcastPlayers();
                 break;
             case 'startgame':
-                var newGame = new Game();
-                newGame.addPlayer(allPlayers[json.uuid]);
-                newGame.startSession();
-                allGames[newGame.gameId] = newGame;
+                if (!json.gameId) {
+                    // we have a single player game
+                    var newGame = new Game('singleplayer');
+                    newGame.addPlayer(allPlayers[json.uuid]);
+                    newGame.startSession();
+                    allGames[newGame.gameId] = newGame;
+                }
+                else {
+                    allGames[json.gameId].startSession();
+                }
                 break;
             case 'validateword':
                 allGames[json.gameId].validateWord(json);

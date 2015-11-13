@@ -1,4 +1,4 @@
-function Game() {
+function Game(type) {
     // List of users playing in the current game. Can contain one or more
     // users (if the game is multiplayer).
     this.userList = [];
@@ -7,6 +7,7 @@ function Game() {
     this.timeout = 1 * 60 * 1000; // 1 minute
     this.gameId = this.generateUuid();
     this.usedWords = {};
+    this.type = type;
 }
 
 // Add a new player to this game.
