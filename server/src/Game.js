@@ -1,4 +1,4 @@
-function Game(type) {
+function Game(type, name) {
     // List of users playing in the current game. Can contain one or more
     // users (if the game is multiplayer).
     this.userList = [];
@@ -8,6 +8,7 @@ function Game(type) {
     this.gameId = this.generateUuid();
     this.usedWords = {};
     this.type = type;
+    this.name = name;
 }
 
 // Add a new player to this game.

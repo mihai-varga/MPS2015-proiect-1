@@ -86,7 +86,7 @@ C.Player = C.Class.extend({
         switch (msg.command) {
             case 'playerlist':
                 console.log(msg.players);
-                this.showPlayers(msg.players);
+                this.showPlayers(msg.players, msg.gameRooms);
                 break;
             case 'startsession':
                 this.game = new C.Game(this.ws, msg);
@@ -97,7 +97,7 @@ C.Player = C.Class.extend({
         }
     },
 
-    showPlayers: function (players) {
+    showPlayers: function (players, gameRooms) {
         $('#players').empty();
         players.forEach(function(player) {
             $('#players').append(
@@ -105,6 +105,7 @@ C.Player = C.Class.extend({
                 '   <p><i class="spy icon"></i>' + player.name + '</p>' +
                 '</div>');
         });
+        console.log(JSON.stringify(gameRooms, null, 4));
     },
 
     addNewGameRoom: function () {

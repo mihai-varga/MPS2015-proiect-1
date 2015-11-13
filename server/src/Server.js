@@ -10,6 +10,13 @@ wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(message) {
         var json = JSON.parse(message);
         switch (json.command) {
+            case 'creategameroom':
+                var newGame = new Game('multiplayer', json.name);
+                newGame.owner = json.uuid;
+                newGame.addPlayer(allPlayers[json.uuid]);
+                allGames[newGame.gameId] = newGame;
+                broadcastPlayers();
+                break;
             case 'setname':
                 // Register a new player.
                 var player = new Player(ws);
@@ -44,18 +51,42 @@ wss.on('connection', function connection(ws) {
 
 function broadcastPlayers() {
     var players = [];
+    var gameRooms = [];
+    var taken = {};
+    for (var gameId in allGames) {
+        var game = allGames[gameId];
+        if (game.type === 'multiplayer') {
+            var gameRoom = {
+                name: game.name,
+                gameId: game.gameId,
+                players: []
+            }
+            game.userList.forEach(function (player) {
+                gameRoom.players.push({
+                    name: player.name,
+                    uuid: player.uuid
+                });
+                taken[player.uuid] = true;
+            });
+            gameRooms.push(gameRoom);
+        }
+    }
     for (var uuid in allPlayers) {
-        var player = allPlayers[uuid];
-        players.push({
-            uuid: player.uuid,
-            name: player.name
-        });
+        if (!taken[uuid]) {
+            // this player does to belong to any game room
+            var player = allPlayers[uuid];
+            players.push({
+                uuid: player.uuid,
+                name: player.name
+            });
+        }
     }
     for (var uuid in allPlayers) {
         var ws = allPlayers[uuid].ws;
         ws.send(JSON.stringify({
             command: 'playerlist',
-            players: players
+            players: players,
+            gameRooms: gameRooms
         }));
     }
 }
