@@ -159,7 +159,7 @@ C.Player = C.Class.extend({
                 uuid: this.uuid
             }));
         }
-        else if (!e) {
+        else if (!e.keyCode) {
             var gameName = $('#gameRoomInput').val();
             this.ws.send(JSON.stringify({
                 command: 'creategameroom',
