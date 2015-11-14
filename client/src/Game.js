@@ -12,6 +12,8 @@ C.Game = C.Class.extend({
         this.score = 0;
         // clear the word list;
         $('#wordList').empty();
+        $('#newWordDiv').removeClass('disabled');
+        $('#startSinglePlayer').addClass('disabled');
         this.startTimer(this.timeout / 1000);
     },
 
