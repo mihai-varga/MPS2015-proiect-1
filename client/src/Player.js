@@ -86,6 +86,9 @@ C.Player = C.Class.extend({
     onMessage: function (msg) {
         msg = JSON.parse(msg.data);
         switch (msg.command) {
+            case 'forcequit':
+                this.forceQuit();
+                break;
             case 'playerlist':
                 this.showPlayers(msg.players, msg.gameRooms);
                 break;
@@ -107,12 +110,14 @@ C.Player = C.Class.extend({
                 '</div>');
         });
         $('#gameRooms').empty();
+        $('#addGameRoomBtn').removeClass('disabled');
         gameRooms.forEach(C.bind(function(gameRoom) {
             var gameRoomPlayers = '<div class="ui bulleted list">';
             gameRoom.players.forEach(C.bind(function(player) {
                 var leaveRoomButton = '';
                 if (player.uuid === this.uuid) {
                     // We are in this gameroom.
+                    $('#addGameRoomBtn').addClass('disabled');
                     this.game.gameId = gameRoom.gameId;
                     leaveRoomButton = '<a onclick="C.player.onGameRoomLeave(\'' + gameRoom.gameId + '\')">' +
                                           '<i class="black remove user icon"></i>' +
@@ -140,12 +145,19 @@ C.Player = C.Class.extend({
         }));
     },
 
+    onGameRoomLeave: function (gameId) {
+        this.ws.send(JSON.stringify({
+            command: 'leavegameroom',
+            gameId: gameId,
+            uuid: this.uuid
+        }));
+    },
+
     addNewGameRoom: function () {
         $('#newGameRoomDialog').modal({
             closable: false,
             onApprove: C.bind(this.onGameRoomNameSelect, this)
         }).modal('show');
-        $('#addGameRoomBtn').addClass('disabled');
     },
 
     onGameRoomNameSelect: function (e) {
@@ -167,5 +179,11 @@ C.Player = C.Class.extend({
                 uuid: this.uuid
             }));
         }
+    },
+
+    forceQuit: function () {
+        this.game.endGame();
+        this.game.gameId = undefined;
+        $('#wordList').empty();
     }
 });
