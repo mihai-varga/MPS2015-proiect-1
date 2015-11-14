@@ -89,7 +89,12 @@ C.Player = C.Class.extend({
                 this.showPlayers(msg.players, msg.gameRooms);
                 break;
             case 'startsession':
-                this.game = new C.Game(this.ws, msg);
+                if (this.game) {
+                    this.game.initialize(this.ws, msg);
+                }
+                else {
+                    this.game = new C.Game(this.ws, msg);
+                }
                 break;
             case 'validateword':
                 this.game.onMessage(msg);

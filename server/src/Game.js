@@ -4,7 +4,7 @@ function Game(type, name) {
     this.userList = [];
     // Game's name, by default = 'FatCat'.
     this.gameRoomName = 'FatCat';
-    this.timeout = 1 * 60 * 1000; // 1 minute
+    this.timeout = 1 * 5 * 1000; // 5 s
     this.gameId = this.generateUuid();
     this.usedWords = {};
     this.type = type;

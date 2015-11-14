@@ -13,6 +13,7 @@ C.Game = C.Class.extend({
         // clear the word list;
         $('#wordList').empty();
         $('#newWordDiv').removeClass('disabled');
+        $('#newWord').focus();
         $('#startSinglePlayer').addClass('disabled');
         this.startTimer(this.timeout / 1000);
     },
@@ -49,7 +50,7 @@ C.Game = C.Class.extend({
             minutes,
             seconds;
         var interval;
-        function timer() {
+        var timer = C.bind(function () {
             // get the number of seconds that have elapsed since
             // startTimer() was called
             diff = duration - (((Date.now() - start) / 1000) | 0);
@@ -65,10 +66,18 @@ C.Game = C.Class.extend({
 
             if (diff <= 0) {
                 clearInterval(interval);
+                this.endGame();
             }
-        };
+        }, this);
         // we don't want to wait a full second before the timer starts
         timer();
         interval = setInterval(timer, 1000);
+    },
+
+    endGame: function () {
+        $('#newWordDiv').addClass('disabled');
+        $('#newWord').blur();
+        $('#startSinglePlayer').removeClass('disabled');
+
     }
 });
