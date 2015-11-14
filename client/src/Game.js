@@ -22,7 +22,8 @@ C.Game = C.Class.extend({
         this.ws.send(JSON.stringify({
             command: 'validateword',
             word: word,
-            gameId: this.gameId
+            gameId: this.gameId,
+            uuid: this.uuid
         }));
     },
 
@@ -35,9 +36,16 @@ C.Game = C.Class.extend({
     },
 
     addWordToList: function (json) {
+        if (json.uuid !== this.uuid) {
+            var icon = 'user icon';
+        } else if (json.valid) {
+            icon = 'green checkmark icon';
+        } else {
+            icon = 'red minus circle icon';
+        }
         $('#wordList').prepend(
             '<div class="item">' +
-                (json.valid ? '<i class="green checkmark icon"></i>' : '<i class="red remove icon"></i>') +
+                '<i class="' + icon + '"></i>' +
                 '<div class="content">' +
                     json.word +
                 '</div>' +
