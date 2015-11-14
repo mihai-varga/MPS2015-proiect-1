@@ -110,11 +110,15 @@ C.Player = C.Class.extend({
         gameRooms.forEach(C.bind(function(gameRoom) {
             var gameRoomPlayers = '<div class="ui bulleted list">';
             gameRoom.players.forEach(C.bind(function(player) {
+                var leaveRoomButton = '';
                 if (player.uuid === this.uuid) {
                     // We are in this gameroom.
                     this.game.gameId = gameRoom.gameId;
+                    leaveRoomButton = '<a onclick="C.player.onGameRoomLeave(\'' + gameRoom.gameId + '\')">' +
+                                          '<i class="black remove user icon"></i>' +
+                                      '</a>';
                 }
-                gameRoomPlayers += '<div class="item">' + player.name + '</div>';
+                gameRoomPlayers += '<div class="item">' + leaveRoomButton + player.name + '</div>';
             }, this));
             gameRoomPlayers += '</div>';
             var gameRoomSegment = '<div class="ui segment">' +
