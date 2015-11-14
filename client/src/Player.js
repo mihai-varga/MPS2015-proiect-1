@@ -12,7 +12,7 @@ C.Player = C.Class.extend({
         this.ws.onclose = function () {throw new Error('The server crashed');};
         this.uuid = this.generateUuid();
         this.promptLoginDialog();
-        this.game = new C.Game(this.ws);
+        this.game = new C.Game(this.ws, this);
     },
 
     // Generates a UUID as per http://www.ietf.org/rfc/rfc4122.txt.
@@ -87,7 +87,6 @@ C.Player = C.Class.extend({
         msg = JSON.parse(msg.data);
         switch (msg.command) {
             case 'playerlist':
-                console.log(msg.players);
                 this.showPlayers(msg.players, msg.gameRooms);
                 break;
             case 'startsession':

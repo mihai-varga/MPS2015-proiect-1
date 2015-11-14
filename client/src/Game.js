@@ -3,8 +3,9 @@ C.Game = C.Class.extend({
         name: 'Single player game'
     },
 
-    initialize: function (ws, options) {
+    initialize: function (ws, player, options) {
         this.ws = ws;
+        this.player = player;
     },
 
     startGame: function (json) {
@@ -25,7 +26,7 @@ C.Game = C.Class.extend({
             command: 'validateword',
             word: word,
             gameId: this.gameId,
-            uuid: this.uuid
+            uuid: this.player.uuid
         }));
     },
 
@@ -38,7 +39,7 @@ C.Game = C.Class.extend({
     },
 
     addWordToList: function (json) {
-        if (json.uuid !== this.uuid) {
+        if (json.uuid !== this.player.uuid) {
             var icon = 'user icon';
         } else if (json.valid) {
             icon = 'green checkmark icon';
