@@ -144,12 +144,24 @@ C.Player = C.Class.extend({
         $('#addGameRoomBtn').addClass('disabled');
     },
 
-    onGameRoomNameSelect: function () {
-        var gameName = $('#gameRoomInput').val();
-        this.ws.send(JSON.stringify({
-            command: 'creategameroom',
-            name: gameName,
-            uuid: this.uuid
-        }));
+    onGameRoomNameSelect: function (e) {
+        if (e && e.keyCode === 13) {
+            // enter
+            var gameName = $('#gameRoomInput').val();
+            $('.ui.modal').modal('hide');
+            this.ws.send(JSON.stringify({
+                command: 'creategameroom',
+                name: gameName,
+                uuid: this.uuid
+            }));
+        }
+        else if (!e) {
+            var gameName = $('#gameRoomInput').val();
+            this.ws.send(JSON.stringify({
+                command: 'creategameroom',
+                name: gameName,
+                uuid: this.uuid
+            }));
+        }
     }
 });
