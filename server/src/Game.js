@@ -4,7 +4,7 @@ function Game(type, name) {
     this.userList = [];
     // Game's name, by default = 'FatCat'.
     this.gameRoomName = 'FatCat';
-    this.timeout = 1 * 5 * 1000; // 5 s
+    this.timeout = 1 * 15 * 1000; // 15 s
     this.gameId = this.generateUuid();
     this.usedWords = {};
     this.type = type;
@@ -17,9 +17,9 @@ Game.prototype.addPlayer = function(player) {
 }
 
 Game.prototype.gameBroadcast = function(msg) {
-    for (var i = 0; i < this.userList.length; i++) {
-        this.userList[i].ws.send(JSON.stringify(msg));
-    }
+    this.userList.forEach(function(player) {
+        player.ws.send(JSON.stringify(msg));
+    });
 }
 
 // Starts a new game session for each connected user and then sets the timeout

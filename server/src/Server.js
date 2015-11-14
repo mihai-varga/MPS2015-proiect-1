@@ -17,6 +17,10 @@ wss.on('connection', function connection(ws) {
                 allGames[newGame.gameId] = newGame;
                 broadcastPlayers();
                 break;
+            case 'joingameroom':
+                allGames[json.gameId].addPlayer(allPlayers[json.uuid]);
+                broadcastPlayers();
+                break;
             case 'setname':
                 // Register a new player.
                 var player = new Player(ws);

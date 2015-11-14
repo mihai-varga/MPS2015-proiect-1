@@ -4,12 +4,14 @@ C.Game = C.Class.extend({
     },
 
     initialize: function (ws, options) {
-        options = C.setOptions(this, options);
-        this.gameId = options.gameId;
-        // timeout in ms
-        this.timeout = options.timeout;
         this.ws = ws;
+    },
+
+    startGame: function (json) {
         this.score = 0;
+        this.gameId = json.gameId;
+        // timeout in ms
+        this.timeout = json.timeout;
         // clear the word list;
         $('#wordList').empty();
         $('#newWordDiv').removeClass('disabled');

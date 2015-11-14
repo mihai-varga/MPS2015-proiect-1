@@ -12,6 +12,7 @@ C.Player = C.Class.extend({
         this.ws.onclose = function () {throw new Error('The server crashed');};
         this.uuid = this.generateUuid();
         this.promptLoginDialog();
+        this.game = new C.Game(this.ws);
     },
 
     // Generates a UUID as per http://www.ietf.org/rfc/rfc4122.txt.
@@ -77,7 +78,8 @@ C.Player = C.Class.extend({
     onStartSinglePlayer: function () {
         this.ws.send(JSON.stringify({
             command: 'startgame',
-            uuid: this.uuid
+            uuid: this.uuid,
+            gameId: this.game.gameId
         }));
     },
 
@@ -89,12 +91,7 @@ C.Player = C.Class.extend({
                 this.showPlayers(msg.players, msg.gameRooms);
                 break;
             case 'startsession':
-                if (this.game) {
-                    this.game.initialize(this.ws, msg);
-                }
-                else {
-                    this.game = new C.Game(this.ws, msg);
-                }
+                this.game.startGame(msg);
                 break;
             case 'validateword':
                 this.game.onMessage(msg);
@@ -111,18 +108,33 @@ C.Player = C.Class.extend({
                 '</div>');
         });
         $('#gameRooms').empty();
-        gameRooms.forEach(function(gameRoom) {
+        gameRooms.forEach(C.bind(function(gameRoom) {
             var gameRoomPlayers = '<div class="ui bulleted list">';
-            gameRoom.players.forEach(function(player) {
+            gameRoom.players.forEach(C.bind(function(player) {
+                if (player.uuid === this.uuid) {
+                    // We are in this gameroom.
+                    this.game.gameId = gameRoom.gameId;
+                }
                 gameRoomPlayers += '<div class="item">' + player.name + '</div>';
-            });
+            }, this));
             gameRoomPlayers += '</div>';
             var gameRoomSegment = '<div class="ui segment">' +
-                                      '<p>' + gameRoom.name + '</p>';
+                  '<button class="fluid ui button" onclick="C.player.onGameRoomJoin(\'' + gameRoom.gameId + '\')">' +
+                        '<i class="add user icon"></i>' +
+                        gameRoom.name +
+                  '</button>';
             gameRoomSegment += gameRoomPlayers;
             gameRoomSegment += '</div>';
             $('#gameRooms').append(gameRoomSegment);
-        });
+        }, this));
+    },
+
+    onGameRoomJoin: function (gameId) {
+        this.ws.send(JSON.stringify({
+            command: 'joingameroom',
+            gameId: gameId,
+            uuid: this.uuid
+        }));
     },
 
     addNewGameRoom: function () {
