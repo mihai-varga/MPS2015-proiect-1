@@ -60,6 +60,7 @@ C.Game = C.Class.extend({
             diff,
             minutes,
             seconds;
+        var interval;
         var timer = C.bind(function () {
             // get the number of seconds that have elapsed since
             // startTimer() was called
@@ -75,19 +76,19 @@ C.Game = C.Class.extend({
             $('#timer').text(minutes + ':' + seconds);
 
             if (diff <= 0) {
+                clearInterval(interval);
                 this.endGame();
             }
         }, this);
         // we don't want to wait a full second before the timer starts
         timer();
-        this.interval = setInterval(timer, 1000);
+        interval = setInterval(timer, 1000);
     },
 
     endGame: function () {
-        clearInterval(this.interval);
-        $('#timer').text('00:00');
         $('#newWordDiv').addClass('disabled');
         $('#newWord').blur();
         $('#startSinglePlayer').removeClass('disabled');
+
     }
 });

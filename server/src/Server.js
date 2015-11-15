@@ -21,9 +21,6 @@ wss.on('connection', function connection(ws) {
                 allGames[json.gameId].addPlayer(allPlayers[json.uuid]);
                 broadcastPlayers();
                 break;
-            case 'leavegameroom':
-                allGames[json.gameId].removePlayer(json.uuid);
-                break;
             case 'setname':
                 // Register a new player.
                 var player = new Player(ws);
@@ -90,7 +87,7 @@ function broadcastPlayers() {
     var taken = {};
     for (var gameId in allGames) {
         var game = allGames[gameId];
-        if (game.type === 'multiplayer' && game.userList.length > 0) {
+        if (game.type === 'multiplayer') {
             var gameRoom = {
                 name: game.name,
                 gameId: game.gameId,
