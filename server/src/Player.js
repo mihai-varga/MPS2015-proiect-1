@@ -16,7 +16,6 @@ Player.prototype.setDice = function(dices) {
 
 // Will update the client's score, based on the word the client has provided.
 Player.prototype.computeScore = function(word) {
-    // TODO: add implementation here
 	if (word.length < 4) {
 		this.score = 0;
 	}
