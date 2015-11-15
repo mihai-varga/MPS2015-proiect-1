@@ -1,118 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Letter carousel</title>
+<title>Letter carousel</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="./client/dist/carousel.js"></script>
-    <script type="text/javascript" src="./client/semantic-ui/semantic.min.js"></script>
-    <script type="text/javascript" src="./client/semantic-ui/components/api.min.js"></script>
-    <script type="text/javascript" src="./client/semantic-ui/components/colorize.min.js"></script>
-    <script type="text/javascript" src="./client/semantic-ui/components/modal.min.js"></script>
-    <script type="text/javascript" src="./client/semantic-ui/components/site.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="./client/dist/carousel.js"></script>
+<script type="text/javascript" src="./client/semantic-ui/semantic.min.js"></script>
+<script type="text/javascript" src="./client/semantic-ui/components/api.min.js"></script>
+<script type="text/javascript" src="./client/semantic-ui/components/colorize.min.js"></script>
+<script type="text/javascript" src="./client/semantic-ui/components/modal.min.js"></script>
+<script type="text/javascript" src="./client/semantic-ui/components/site.min.js"></script>
 
-    <link rel="stylesheet" href="./client/semantic-ui/semantic.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/button.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/container.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/divider.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/grid.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/header.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/icon.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/input.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/modal.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/segment.min.css"/>
-    <link rel="stylesheet" href="./client/semantic-ui/components/site.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/semantic.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/button.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/container.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/divider.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/grid.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/header.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/icon.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/input.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/modal.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/segment.min.css"/>
+<link rel="stylesheet" href="./client/semantic-ui/components/site.min.css"/>
 </head>
 <body>
 <!-- Login dialog -->
 <div class="ui modal" id="loginDialog">
-  <div class="header">
-   Welcome to Word Carousel!
-  </div>
-  <div class="image content">
-    <div class="description">
-      <div class="ui header">Please pick a name in order to continue.</div>
-      <div class="ui big input focus">
-        <input type="text" id="playerNameInput" onkeypress="C.player.onNameInput(event)" placeholder="Name...">
-      </div>
-    </div>
-  </div>
-  <div class="actions">
-    <div class="ui positive right labeled icon button">
-        OK
-      <i class="checkmark icon"></i>
-    </div>
-  </div>
+	<div class="header">
+		Welcome to Word Carousel!
+	</div>
+	<div class="image content">
+		<div class="description">
+			<div class="ui header">Please pick a name in order to continue.</div>
+			<div class="ui big input focus">
+				<input type="text" id="playerNameInput" onkeypress="C.player.onNameInput(event)" placeholder="Name...">
+			</div>
+		</div>
+	</div>
+	<div class="actions">
+		<div class="ui positive right labeled icon button">
+			OK
+			<i class="checkmark icon"></i>
+		</div>
+	</div>
 </div>
+
+<div class="ui grid">
+	<div class="four wide column">A</div>
+	<div class="four wide column">B</div>
+	<div class="four wide column">C</div>
+	<div class="four wide column">D</div>
+	<div class="four wide column">E</div>
+	<div class="four wide column">F</div>
+	<div class="four wide column">G</div>
+	<div class="four wide column">H</div>
+	<div class="four wide column">I</div>
+</div>
+
 
 <!-- New game room dialog -->
 <div class="ui modal" id="newGameRoomDialog">
-  <div class="header">
-  Create a new game room
-  </div>
-  <div class="image content">
-    <div class="description">
-      <div class="ui header">Please pick a name for your game room.</div>
-      <div class="ui big input focus">
-        <input type="text" id="gameRoomInput" onkeypress="C.player.onGameRoomNameSelect(event)" placeholder="Name...">
-      </div>
-    </div>
-  </div>
-  <div class="actions">
-    <div class="ui positive right labeled icon button">
-        OK
-      <i class="checkmark icon"></i>
-    </div>
-  </div>
+	<div class="header">
+		Create a new game room
+	</div>
+	<div class="image content">
+		<div class="description">
+			<div class="ui header">Please pick a name for your game room.</div>
+			<div class="ui big input focus">
+				<input type="text" id="gameRoomInput" onkeypress="C.player.onGameRoomNameSelect(event)" placeholder="Name...">
+			</div>
+		</div>
+	</div>
+	<div class="actions">
+		<div class="ui positive right labeled icon button">
+			OK
+			<i class="checkmark icon"></i>
+		</div>
+	</div>
 </div>
 
 
 <!-- Game interface -->
 <h2 class="ui center aligned header">Basic Responsive</h2>
 <div class="ui three column stackable grid">
-  <div class="column">
-      <div class="ui center aligned basic segment">
-          <button id="startSinglePlayer" class="ui massive olive button" onclick="C.player.onStartSinglePlayer()">
-            Start game
-          </button>
-      </div>
-      <div class="ui center aligned basic segment">
-          <div id="newWordDiv" class="ui disabled input focus">
-            <input type="text" placeholder="New word..." id="newWord" onkeypress="C.player.onWordInput(event)">
-          </div>
-      </div>
-  </div>
-  <div class="column">
-    <div class="ui massive label">
-      <i class="wait icon"></i>
-      Time left:
-      <div id="timer" class="detail">00:00</div>
-    </div>
-    <h2>Submitted words</h2>
-    <div id="wordList" class="ui list">
-    </div>
-  </div>
-  <div class="column">
-      <div class="ui segments">
-          <div class="ui segment">
-              <p>Players</p>
-          </div>
-          <div class="ui segments" id="players">
-          </div>
-      </div>
-      <div class="ui segments">
-          <div class="ui segment">
-              <p>
-                <button class="ui icon button" id="addGameRoomBtn" onClick="C.player.addNewGameRoom()">
-                    <i class="plus icon"></i>
-                </button>
-                Game rooms
-              </p>
-          </div>
-          <div class="ui segments" id="gameRooms">
-          </div>
-      </div>
-  </div>
+	<div class="column">
+		<div class="ui center aligned basic segment">
+			<button id="startSinglePlayer" class="ui massive olive button" onclick="C.player.onStartSinglePlayer()">
+				Start game
+			</button>
+		</div>
+		<div class="ui center aligned basic segment">
+			<div id="newWordDiv" class="ui disabled input focus">
+				<input type="text" placeholder="New word..." id="newWord" onkeypress="C.player.onWordInput(event)">
+			</div>
+		</div>
+	</div>
+	<div class="column">
+		<div class="ui massive label">
+			<i class="wait icon"></i>
+			Time left:
+			<div id="timer" class="detail">00:00</div>
+		</div>
+		<h2>Submitted words</h2>
+		<div id="wordList" class="ui list">
+		</div>
+	</div>
+	<div class="column">
+		<div class="ui segments">
+			<div class="ui segment">
+				<p>Players</p>
+			</div>
+			<div class="ui segments" id="players">
+			</div>
+		</div>
+		<div class="ui segments">
+			<div class="ui segment">
+				<p>
+				<button class="ui icon button" id="addGameRoomBtn" onClick="C.player.addNewGameRoom()">
+					<i class="plus icon"></i>
+				</button>
+				Game rooms
+				</p>
+			</div>
+			<div class="ui segments" id="gameRooms">
+			</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>
