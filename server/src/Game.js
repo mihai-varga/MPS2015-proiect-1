@@ -18,6 +18,29 @@ Game.prototype.addPlayer = function(player) {
     this.userList.push(player);
 }
 
+// Remove a player from the game room
+Game.prototype.removePlayer = function(uuid) {
+    var index = -1;
+    for (var i = 0; i < this.userList.length; i++) {
+        if (this.userList[i].uuid === uuid) {
+            index = i;
+            break;
+        }
+    }
+    if (index > -1) {
+        this.userList.splice(index, 1);
+    }
+    allPlayers[uuid].ws.send(JSON.stringify({
+        command: 'forcequit'
+    }));
+    if (this.owner === this.uuid) {
+        // the game room owner left, at the end of the round we will
+        // destory the room
+        this.destory = true;
+    }
+    broadcastPlayers();
+}
+
 Game.prototype.gameBroadcast = function(msg) {
     this.userList.forEach(function(player) {
         player.ws.send(JSON.stringify(msg));
@@ -42,6 +65,14 @@ Game.prototype.endSession = function() {
         command : 'endsession',
         gameId: this.gameId
     });
+    if (this.destory) {
+        this.gameBroadcast({
+            command : 'forcequit'
+        });
+        this.userList = [];
+        delete allGames[this.gameId];
+    }
+    broadcastPlayers();
 }
 
 // Generates a UUID as per http://www.ietf.org/rfc/rfc4122.txt.
