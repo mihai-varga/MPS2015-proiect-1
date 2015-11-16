@@ -6,6 +6,24 @@ var WebSocketServer = require('ws').Server
 var allPlayers = {};
 var allGames = {};
 
+var dictionary = {};
+var dictionaryPath = '../Dictionary/loc-reduse-5.0.txt'
+var fs = require('fs');
+
+var dices = [['A','A','U','I','H','J'], ['T','R','N','S','M','B'],
+		['A','A','R','C','D','M'], ['E','E','I','O','D','F'],
+		['A','E','U','S','F','V'], ['T','L','N','P','G','C'],
+		['A','I','O','E','X','Z'], ['N','S','T','R','G','B'],
+		['I','I','U','E','L','P']];
+			
+//dictionary initialization from file
+function initDictionary(){
+	var array = fs.readFileSync(dictionaryPath).toString().split("\r\n");
+	for(i in array) {
+		dictionary[array[i]] = array[i].length;
+	}
+}
+
 wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(message) {
         var json = JSON.parse(message);
