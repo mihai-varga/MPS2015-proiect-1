@@ -6,6 +6,8 @@ function Game(type, name) {
     this.gameRoomName = 'FatCat';
     this.timeout = 1 * 15 * 1000; // 15 s
     this.gameId = this.generateUuid();
+    //keeps the current letters from which the player creates words
+    this.diceRoll = [];
     this.usedWords = {};
     this.type = type;
     this.name = name;
@@ -54,10 +56,30 @@ Game.prototype.generateUuid = function() {
     return uuid;
 }
 
+//Roll dice for current game
+Game.prototype.getDiceRoll = function(){
+    for(i = 0; i < 9; i ++){
+        this.diceRoll[i] = dices[i][Math.floor(Math.random() * 6)];
+    }
+}
+
 // Handles a new word inputed by the player
 Game.prototype.validateWord = function(json) {
     // return the initial json with some modified properties
-    var isValidWord = Math.random() > 0.5; // TODO - check the dictionary
+    var isValidWord = false;
+    if (json.word in dictionary){
+        var checkWord = (json.word).toUpperCase();
+        for(int i = 0; i < 9; i ++){
+            if(checkWord.indexOf(diceRoll[i]) > -1){
+                checkWord = checkWord.replace(diceRoll[i], '');
+            }
+        }
+	if(checkWord.length == 0){
+            isValidWord = true;
+        }
+    }
+
+    //var isValidWord = Math.random() > 0.5; // TODO - check the dictionary
     json.valid = isValidWord && !this.usedWords[json.word];
     if (json.valid) {
         this.usedWords[json.word] = true;
