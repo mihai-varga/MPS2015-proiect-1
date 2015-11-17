@@ -50,10 +50,13 @@ Game.prototype.gameBroadcast = function(msg) {
 // Starts a new game session for each connected user and then sets the timeout
 // to end this session.
 Game.prototype.startSession = function() {
+
+    this.getDiceRoll();
     this.gameBroadcast({
         command : 'startsession',
         gameId: this.gameId,
-        timeout: this.timeout
+        timeout: this.timeout,
+        dicesRolled: this.diceRoll
     });
     setTimeout(this.endSession.bind(this), this.timeout);
 }
