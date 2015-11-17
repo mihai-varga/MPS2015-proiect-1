@@ -18,6 +18,15 @@ C.Game = C.Class.extend({
         $('#newWordDiv').removeClass('disabled');
         $('#newWord').focus();
         $('#startSinglePlayer').addClass('disabled');
+
+        /* Iterate throught all dices and show the rolled letters*/
+        var s="zar", zar_c, aux;
+        for(var i=1;i<=9;++i) {
+            aux=s+i;
+            zar_c = document.getElementById(aux);
+            zar_c.innerHTML = " ";
+        }
+
         this.startTimer(this.timeout / 1000);
     },
 
