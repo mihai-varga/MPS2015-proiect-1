@@ -104,8 +104,8 @@ Game.prototype.validateWord = function(json) {
     if (json.word in dictionary){
         var checkWord = (json.word).toUpperCase();
         for(var i = 0; i < 9; i ++){
-            if(checkWord.indexOf(diceRoll[i]) > -1){
-                checkWord = checkWord.replace(diceRoll[i], '');
+            if(checkWord.indexOf(this.diceRoll[i]) > -1){
+                checkWord = checkWord.replace(this.diceRoll[i], '');
             }
         }
         if(checkWord.length == 0){
