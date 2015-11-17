@@ -23,10 +23,8 @@ function initDictionary(){
 	for(i in array) {
 		dictionary[array[i]] = array[i].length;
 	}
-        //console.log("Finished");
-        //console.log(dictionary["cuvant"]);
 }
-//console.log(__dirname);
+
 initDictionary();
 
 
