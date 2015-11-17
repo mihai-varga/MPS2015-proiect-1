@@ -13,6 +13,7 @@ C.Game = C.Class.extend({
         this.gameId = json.gameId;
         // timeout in ms
         this.timeout = json.timeout;
+        var d_r = json.dicesRolled;
         // clear the word list;
         $('#wordList').empty();
         $('#newWordDiv').removeClass('disabled');
@@ -24,7 +25,7 @@ C.Game = C.Class.extend({
         for(var i=1;i<=9;++i) {
             aux=s+i;
             zar_c = document.getElementById(aux);
-            zar_c.innerHTML = " ";
+            zar_c.innerHTML = d_r[i-1];
         }
 
         this.startTimer(this.timeout / 1000);
