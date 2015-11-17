@@ -7,7 +7,7 @@ var allPlayers = {};
 var allGames = {};
 
 var dictionary = {};
-var dictionaryPath = '../Dictionary/loc-reduse-5.0.txt'
+var dictionaryPath = __dirname + '/../Dictionary/loc-reduse-5.0.txt'
 var fs = require('fs');
 
 var dices = [['A','A','U','I','H','J'], ['T','R','N','S','M','B'],
@@ -18,11 +18,17 @@ var dices = [['A','A','U','I','H','J'], ['T','R','N','S','M','B'],
 			
 //dictionary initialization from file
 function initDictionary(){
+
 	var array = fs.readFileSync(dictionaryPath).toString().split("\r\n");
 	for(i in array) {
 		dictionary[array[i]] = array[i].length;
 	}
+        console.log("Finished");
+        console.log(dictionary["cuvant"]);
 }
+console.log(__dirname);
+initDictionary();
+
 
 wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(message) {
