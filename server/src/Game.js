@@ -100,17 +100,16 @@ Game.prototype.validateWord = function(json) {
     var isValidWord = false;
     if (json.word in dictionary){
         var checkWord = (json.word).toUpperCase();
-        for(int i = 0; i < 9; i ++){
+        for(var i = 0; i < 9; i ++){
             if(checkWord.indexOf(diceRoll[i]) > -1){
                 checkWord = checkWord.replace(diceRoll[i], '');
             }
         }
-	if(checkWord.length == 0){
+        if(checkWord.length == 0){
             isValidWord = true;
         }
     }
 
-    //var isValidWord = Math.random() > 0.5; // TODO - check the dictionary
     json.valid = isValidWord && !this.usedWords[json.word];
     if (json.valid) {
         this.usedWords[json.word] = true;
