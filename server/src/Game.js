@@ -58,6 +58,9 @@ Game.prototype.startSession = function() {
         timeout: this.timeout,
         dicesRolled: this.diceRoll
     });
+    this.userList.forEach(function(player) {
+        player.score = 0;
+    });
     setTimeout(this.endSession.bind(this), this.timeout);
 }
 
@@ -130,7 +133,12 @@ Game.prototype.validateWord = function(json) {
 
     json.valid = isValidWord && !this.usedWords[json.word];
     if (json.valid) {
+        json.score = this.computeScore(json.word);
+        allPlayers[json.uuid].score += json.score;
         this.usedWords[json.word] = true;
+    }
+    else {
+        json.score = 0;
     }
     this.gameBroadcast(json);
 }
