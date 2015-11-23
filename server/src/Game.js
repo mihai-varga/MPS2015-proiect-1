@@ -97,6 +97,21 @@ Game.prototype.getDiceRoll = function(){
     }
 }
 
+// Will update the client's score, based on the word the client has provided.
+Game.prototype.computeScore = function(word) {
+	if (word.length < 4) {
+		this.score = 0;
+	}
+	if (word.length > 3 && word.length < 10) {
+		this.score = word.length;
+	// BONUS: When the word's length is greater than 5, then the score will be
+	// the length's square
+		if (word.length > 5) {
+			this.score = word.length * word.length;
+		}
+	}
+}
+
 // Handles a new word inputed by the player
 Game.prototype.validateWord = function(json) {
     // return the initial json with some modified properties
