@@ -102,17 +102,14 @@ Game.prototype.getDiceRoll = function(){
 
 // Will update the client's score, based on the word the client has provided.
 Game.prototype.computeScore = function(word) {
-	if (word.length < 4) {
-		this.score = 0;
-	}
-	if (word.length > 3 && word.length < 10) {
-		this.score = word.length;
-	// BONUS: When the word's length is greater than 5, then the score will be
-	// the length's square
-		if (word.length > 5) {
-			this.score = word.length * word.length;
-		}
-	}
+    var score = 0;
+    if (word.length >= 3 && word.length <= 6) {
+        score = word.length;
+        if (word.length == 6) {
+            score = word.length * word.length;
+        }
+    }
+    return score;
 }
 
 // Handles a new word inputed by the player
@@ -131,14 +128,13 @@ Game.prototype.validateWord = function(json) {
         }
     }
 
-    json.valid = isValidWord && !this.usedWords[json.word];
+    json.valid = isValidWord &&
+        !this.usedWords[json.word] &&
+        json.word.length >= 3;
     if (json.valid) {
-        json.score = this.computeScore(json.word);
-        allPlayers[json.uuid].score += json.score;
+        allPlayers[json.uuid].score += this.computeScore(json.word);
         this.usedWords[json.word] = true;
     }
-    else {
-        json.score = 0;
-    }
+    json.score = allPlayers[json.uuid].score;
     this.gameBroadcast(json);
 }

@@ -19,6 +19,7 @@ C.Game = C.Class.extend({
         $('#newWordDiv').removeClass('disabled');
         $('#newWord').focus();
         $('#startSinglePlayer').addClass('disabled');
+        $('#score').text(0);
 
         /* Iterate throught all dices and show the rolled letters*/
         var s="zar", zar_c, aux;
@@ -44,6 +45,7 @@ C.Game = C.Class.extend({
         switch (json.command) {
             case 'validateword':
                 this.addWordToList(json);
+                $('#score').text(json.score);
                 break;
         }
     },
