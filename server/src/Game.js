@@ -4,7 +4,7 @@ function Game(type, name) {
     this.userList = [];
     // Game's name, by default = 'FatCat'.
     this.gameRoomName = 'FatCat';
-    this.timeout = 1 * 15 * 1000; // 15 s
+    this.timeout = 1 * 60 * 1000; // 60 s
     this.gameId = this.generateUuid();
     //keeps the current letters from which the player creates words
     this.diceRoll = [];
