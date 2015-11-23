@@ -45,7 +45,9 @@ C.Game = C.Class.extend({
         switch (json.command) {
             case 'validateword':
                 this.addWordToList(json);
-                $('#score').text(json.score);
+                if (json.uuid === this.uuid) {
+                    $('#score').text(json.score);
+                }
                 break;
         }
     },
